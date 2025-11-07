@@ -2,7 +2,7 @@
 
 Collection complète de 9 exercices progressifs implémentant les techniques avancées de web scraping avec BeautifulSoup.
 
-## 🎯 Objectifs
+## Objectifs
 
 - Maîtriser BeautifulSoup et requests pour l'extraction de données web
 - Implémenter des patterns robustes (retry, cache, logging)
@@ -10,7 +10,7 @@ Collection complète de 9 exercices progressifs implémentant les techniques ava
 - Nettoyer et valider les données extraites
 - Créer des architectures modulaires et réutilisables
 
-## 📦 Installation
+## Installation
 
 ```bash
 # Cloner le dépôt
@@ -21,7 +21,7 @@ cd scrapping
 pip install -r requirements.txt
 ```
 
-## 🚀 Utilisation
+## Utilisation
 
 ### Menu interactif
 
@@ -38,7 +38,7 @@ python exercice_03_fake_jobs.py
 # ... etc
 ```
 
-## 📋 Liste des exercices
+## Liste des exercices
 
 | # | Exercice | Description | Durée |
 |---|----------|-------------|-------|
@@ -52,7 +52,7 @@ python exercice_03_fake_jobs.py
 | 8 | **Multi-Source** | Architecture modulaire multi-sources | 1-2 min |
 | 9 | **Authentication** | Gestion sessions et contenu protégé | 20-30s |
 
-## 🎓 Concepts couverts
+## Concepts couverts
 
 ### Techniques de base
 - Sélecteurs CSS et XPath
@@ -79,7 +79,7 @@ python exercice_03_fake_jobs.py
 - Validation croisée
 - Métriques qualité
 
-## 📊 Sorties générées
+## Sorties generees
 
 Les exercices génèrent différents formats de sortie dans `./outputs/`:
 - **JSON** : Données structurées avec métadonnées
@@ -88,7 +88,7 @@ Les exercices génèrent différents formats de sortie dans `./outputs/`:
 - **PNG** : Visualisations matplotlib
 - **LOG** : Journaux détaillés d'exécution
 
-## ⚙️ Configuration
+## Configuration
 
 ### Limites par défaut
 
@@ -115,27 +115,27 @@ export SCRAPER_TIMEOUT=15
 export SCRAPER_DELAY=2
 ```
 
-## 🛡️ Bonnes pratiques
+## Bonnes pratiques
 
-✅ **Respecter les serveurs**
+**Respecter les serveurs**
 - Délais aléatoires entre requêtes (0.5-2s)
 - User-Agent approprié
 - Respect de `robots.txt`
 - Rate limiting adaptatif
 
-✅ **Gestion d'erreurs robuste**
+**Gestion d'erreurs robuste**
 - Try-except complets
 - Retry avec backoff exponentiel
 - Timeout adaptatifs
 - Logging détaillé
 
-✅ **Code maintenable**
+**Code maintenable**
 - Architecture orientée objet
 - Docstrings complètes
 - Type hints (typing)
 - Séparation des préoccupations
 
-## 📈 Performance
+## Performance
 
 ### Métriques attendues
 
@@ -150,7 +150,7 @@ Détails par exercice voir [LIMITATIONS_QUANTITATIVES.md](LIMITATIONS_QUANTITATI
 - Parallel processing (Exercice 8)
 - Checkpoints pour reprise rapide
 
-## 🧪 Tests
+## Tests
 
 ```bash
 # Test rapide d'un exercice
@@ -160,7 +160,7 @@ python exercice_03_fake_jobs.py --keyword Python --max 10
 python exercice_01_books_scraper.py  # Modifier max_pages dans le code
 ```
 
-## 📚 Dépendances principales
+## Dependances principales
 
 - **requests** : Requêtes HTTP
 - **beautifulsoup4** : Parsing HTML
@@ -172,11 +172,11 @@ python exercice_01_books_scraper.py  # Modifier max_pages dans le code
 
 Voir [requirements.txt](requirements.txt) pour versions complètes.
 
-## 🤝 Contribution
+## Contribution
 
 Projet éducatif - Master 1 Algo 2025
 
-## ⚠️ Avertissement
+## Avertissement
 
 Ces exercices utilisent des sites web d'entraînement publics:
 - https://books.toscrape.com/
@@ -189,13 +189,13 @@ Ces exercices utilisent des sites web d'entraînement publics:
 3. Obtenir les autorisations nécessaires
 4. Limiter la fréquence des requêtes
 
-## 📄 Licence
+## Licence
 
 Code éducatif - Utilisation libre dans cadre académique
 
 © 2025 - Tous droits réservés
 
-## 🔗 Ressources
+## Ressources
 
 - [BeautifulSoup Documentation](https://www.crummy.com/software/BeautifulSoup/)
 - [Requests Documentation](https://requests.readthedocs.io/)
