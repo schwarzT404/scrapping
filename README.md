@@ -17,6 +17,15 @@ Collection complète de 9 exercices progressifs implémentant les techniques ava
 git clone https://github.com/schwarzT404/scrapping.git
 cd scrapping
 
+# Créer un environnement virtuel
+python -m venv .venv
+
+# Activer l'environnement virtuel
+# Sur Windows :
+.venv\Scripts\activate
+# Sur macOS/Linux :
+source .venv/bin/activate
+
 # Installer les dépendances
 pip install -r requirements.txt
 ```
