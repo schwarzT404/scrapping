@@ -410,7 +410,7 @@ class BookMarketAnalyzer:
         plt.tight_layout()
         
         # Sauvegarde
-        output_dir = Path('./outputs')
+        output_dir = Path('./outputs/exercice_04')
         output_dir.mkdir(parents=True, exist_ok=True)
         
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
@@ -423,7 +423,7 @@ class BookMarketAnalyzer:
     
     def export_report(self, report: Dict):
         """Export rapport JSON"""
-        output_dir = Path('./outputs')
+        output_dir = Path('./outputs/exercice_04')
         output_dir.mkdir(parents=True, exist_ok=True)
         
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')

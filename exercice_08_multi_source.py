@@ -301,12 +301,12 @@ class MultiSourceScraper:
         self.all_data = []
         self.normalized_data = []
         
-        self.output_dir = Path('./outputs')
+        self.output_dir = Path('./outputs/exercice_08')
         self.output_dir.mkdir(parents=True, exist_ok=True)
     
     def _create_default_config(self) -> Path:
         """Création configuration par défaut"""
-        config_file = Path('./scraping_data/scraper_config.yaml')
+        config_file = Path('./outputs/exercice_08/scraper_config.yaml')
         config_file.parent.mkdir(parents=True, exist_ok=True)
         
         default_config = {

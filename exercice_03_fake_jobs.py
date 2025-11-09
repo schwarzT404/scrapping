@@ -285,7 +285,7 @@ class FakeJobsScraper:
     
     def export_csv(self):
         """Export CSV UTF-8"""
-        output_dir = Path('./outputs')
+        output_dir = Path('./outputs/exercice_03')
         output_dir.mkdir(parents=True, exist_ok=True)
         
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')

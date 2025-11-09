@@ -23,21 +23,19 @@ class AuthenticatedScraper:
         self.auth_token = None
         
         # Chemins cross-platform
-        self.data_dir = Path('./scraping_data')
-        self.output_dir = Path('./outputs')
+        self.output_dir = Path('./outputs/exercice_09')
         self._ensure_directories()
         
         self.credentials = self._load_credentials()
     
     def _ensure_directories(self):
         """Création répertoires nécessaires"""
-        self.data_dir.mkdir(parents=True, exist_ok=True)
         self.output_dir.mkdir(parents=True, exist_ok=True)
         
     def _load_credentials(self) -> Dict[str, str]:
         """Chargement sécurisé credentials"""
         # Configuration par défaut pour quotes.toscrape
-        credentials_file = self.data_dir / 'credentials.json'
+        credentials_file = self.output_dir / 'credentials.json'
         
         default_credentials = {
             'username': 'admin',  # Credentials test site
@@ -136,7 +134,7 @@ class AuthenticatedScraper:
     
     def _store_session_cookies(self):
         """Sauvegarde cookies session"""
-        cookies_file = self.data_dir / 'session_cookies.json'
+        cookies_file = self.output_dir / 'session_cookies.json'
         
         cookies_dict = {
             cookie.name: cookie.value 
@@ -152,7 +150,7 @@ class AuthenticatedScraper:
     
     def _load_session_cookies(self) -> bool:
         """Chargement cookies session précédente"""
-        cookies_file = self.data_dir / 'session_cookies.json'
+        cookies_file = self.output_dir / 'session_cookies.json'
         
         try:
             if cookies_file.exists():
@@ -249,7 +247,7 @@ class AuthenticatedScraper:
                 self.session.cookies.clear()
                 
                 # Suppression cookies sauvegardés
-                cookies_file = self.data_dir / 'session_cookies.json'
+                cookies_file = self.output_dir / 'session_cookies.json'
                 if cookies_file.exists():
                     cookies_file.unlink()
                 

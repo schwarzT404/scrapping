@@ -36,12 +36,10 @@ class ResilientScraper:
         self.max_pages = max_pages
         
         # Chemins
-        self.data_dir = Path('./scraping_data')
-        self.output_dir = Path('./outputs')
-        self.data_dir.mkdir(parents=True, exist_ok=True)
+        self.output_dir = Path('./outputs/exercice_06')
         self.output_dir.mkdir(parents=True, exist_ok=True)
         
-        self.checkpoint_file = self.data_dir / checkpoint_file
+        self.checkpoint_file = self.output_dir / checkpoint_file
         
         # Session robuste
         self.session = self._create_robust_session()

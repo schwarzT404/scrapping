@@ -3,6 +3,14 @@ Exercice 5: Navigation catégorielle avancée
 Cartographie arborescence catégories et statistiques
 """
 
+import sys
+import io
+
+# Configuration encodage UTF-8 pour Windows
+if sys.platform == 'win32':
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
+
 import requests
 from bs4 import BeautifulSoup
 import json
@@ -310,7 +318,7 @@ class CategoryNavigator:
     
     def export_hierarchy_json(self):
         """Export arborescence JSON nested"""
-        output_dir = Path('./outputs')
+        output_dir = Path('./outputs/exercice_05')
         output_dir.mkdir(parents=True, exist_ok=True)
         
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
@@ -325,7 +333,7 @@ class CategoryNavigator:
     
     def export_statistics_json(self):
         """Export statistiques détaillées"""
-        output_dir = Path('./outputs')
+        output_dir = Path('./outputs/exercice_05')
         output_dir.mkdir(parents=True, exist_ok=True)
         
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')

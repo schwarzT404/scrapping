@@ -72,20 +72,16 @@ class BooksScraperComplete:
             
             soup = BeautifulSoup(response.content, 'html.parser')
             
-            # Description complète
             description_tag = soup.select_one('#product_description + p')
             description = description_tag.get_text(strip=True) if description_tag else 'N/A'
             
-            # Catégorie depuis breadcrumb
             breadcrumb = soup.select('.breadcrumb li')
             category_main = breadcrumb[2].get_text(strip=True) if len(breadcrumb) > 2 else 'N/A'
             
-            # Stock
             stock_tag = soup.select_one('.instock.availability')
             stock_text = stock_tag.get_text(strip=True) if stock_tag else ''
             stock_number = self._extract_stock_number(stock_text)
             
-            # Image haute définition
             img_tag = soup.select_one('#product_gallery img')
             img_url = urljoin(self.base_url, img_tag['src']) if img_tag else 'N/A'
             
@@ -111,7 +107,6 @@ class BooksScraperComplete:
             
             page_books = []
             for book in books:
-                # Données page catalogue
                 title_tag = book.select_one('h3 a')
                 title = title_tag['title'] if title_tag else 'N/A'
                 
@@ -124,7 +119,6 @@ class BooksScraperComplete:
                 rating_tag = book.select_one('.star-rating')
                 rating = self._convert_rating(rating_tag['class']) if rating_tag else 0
                 
-                # Données page détail
                 detail_data = self._scrape_book_detail(book_url)
                 self._respectful_delay()
                 
@@ -184,7 +178,7 @@ class BooksScraperComplete:
         """Sauvegarde JSON hiérarchique avec timestamp"""
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
         from pathlib import Path
-        output_dir = Path('./outputs')
+        output_dir = Path('./outputs/exercice_01')
         output_dir.mkdir(parents=True, exist_ok=True)
         filename = str(output_dir / f'books_data_{timestamp}.json')
         
@@ -209,7 +203,6 @@ def main():
     print("EXERCICE 1: Books to Scrape - Extraction complète")
     print("=" * 70)
     
-    # Scraper avec limite par défaut (20 pages = ~400 livres)
     scraper = BooksScraperComplete(max_pages=20)
     scraper.scrape_all_pages()
     scraper.save_to_json()

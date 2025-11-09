@@ -446,7 +446,7 @@ class DataCleaningPipeline:
     
     def export_cleaned_data(self):
         """Export données nettoyées en CSV"""
-        output_dir = Path('./outputs')
+        output_dir = Path('./outputs/exercice_07')
         output_dir.mkdir(parents=True, exist_ok=True)
         
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
@@ -463,7 +463,7 @@ class DataCleaningPipeline:
     
     def export_quality_report(self, metrics: Dict):
         """Export rapport qualité JSON"""
-        output_dir = Path('./outputs')
+        output_dir = Path('./outputs/exercice_07')
         output_dir.mkdir(parents=True, exist_ok=True)
         
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')

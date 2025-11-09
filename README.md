@@ -23,19 +23,18 @@ pip install -r requirements.txt
 
 ## Utilisation
 
-### Menu interactif
-
-```bash
-python main_scraping_exercises.py
-```
-
-### Exercices individuels
+Chaque exercice s'exécute de manière indépendante :
 
 ```bash
 python exercice_01_books_scraper.py
 python exercice_02_quotes_graph.py
 python exercice_03_fake_jobs.py
-# ... etc
+python exercice_04_market_analysis.py
+python exercice_05_category_navigation.py
+python exercice_06_resilient_scraper.py
+python exercice_07_data_cleaning.py
+python exercice_08_multi_source.py
+python exercice_09_authentication.py
 ```
 
 ## Liste des exercices
@@ -79,9 +78,40 @@ python exercice_03_fake_jobs.py
 - Validation croisée
 - Métriques qualité
 
-## Sorties generees
+## Sorties générées
 
-Les exercices génèrent différents formats de sortie dans `./outputs/`:
+Chaque exercice génère ses fichiers dans un dossier dédié `./outputs/exercice_XX/`:
+
+```
+outputs/
+├── exercice_01/  # Books to Scrape
+│   └── books_data_YYYYMMDD_HHMMSS.json
+├── exercice_02/  # Quotes Graph
+│   ├── quotes_data_YYYYMMDD_HHMMSS.json
+│   └── quotes_graph.graphml
+├── exercice_03/  # Fake Jobs
+│   └── fake_jobs_YYYYMMDD_HHMMSS.csv
+├── exercice_04/  # Market Analysis
+│   ├── book_market_analysis_YYYYMMDD_HHMMSS.png
+│   └── market_report_YYYYMMDD_HHMMSS.json
+├── exercice_05/  # Category Navigation
+│   ├── categories_hierarchy_YYYYMMDD_HHMMSS.json
+│   └── categories_statistics_YYYYMMDD_HHMMSS.json
+├── exercice_06/  # Resilient Scraper
+│   ├── books_resilient_YYYYMMDD_HHMMSS.json
+│   ├── performance_report_YYYYMMDD_HHMMSS.json
+│   └── scraper.log
+├── exercice_07/  # Data Cleaning
+│   ├── books_cleaned_YYYYMMDD_HHMMSS.csv
+│   └── quality_report_YYYYMMDD_HHMMSS.json
+├── exercice_08/  # Multi-Source
+│   ├── multi_source_data_YYYYMMDD_HHMMSS.json
+│   └── performance_metrics_YYYYMMDD_HHMMSS.json
+└── exercice_09/  # Authentication
+    └── authenticated_scraping_data.json
+```
+
+### Formats de sortie
 - **JSON** : Données structurées avec métadonnées
 - **CSV** : Export tabulaire (offres d'emploi, données nettoyées)
 - **GraphML** : Graphes relationnels (importable dans Gephi)
@@ -153,11 +183,22 @@ Détails par exercice voir [LIMITATIONS_QUANTITATIVES.md](LIMITATIONS_QUANTITATI
 ## Tests
 
 ```bash
-# Test rapide d'un exercice
-python exercice_03_fake_jobs.py --keyword Python --max 10
+# Exécuter un exercice spécifique
+python exercice_01_books_scraper.py
 
-# Test avec limite réduite
-python exercice_01_books_scraper.py  # Modifier max_pages dans le code
+# Les résultats seront dans outputs/exercice_01/
+# Exemple: outputs/exercice_01/books_data_20251109_193008.json
+
+# Tester tous les exercices
+python exercice_01_books_scraper.py
+python exercice_02_quotes_graph.py
+python exercice_03_fake_jobs.py
+python exercice_04_market_analysis.py
+python exercice_05_category_navigation.py
+python exercice_06_resilient_scraper.py
+python exercice_07_data_cleaning.py
+python exercice_08_multi_source.py
+python exercice_09_authentication.py
 ```
 
 ## Dependances principales

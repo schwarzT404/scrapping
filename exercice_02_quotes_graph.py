@@ -30,23 +30,19 @@ class QuotesGraphScraper:
         self.max_pages = max_pages
         self.session = requests.Session()
         
-        # Structures de données
         self.quotes = []
         self.authors = {}
         self.tags = set()
         
-        # Système de cache
-        self.cache_dir = Path('./scraping_data/cache')
+        self.cache_dir = Path('./outputs/exercice_02/cache')
         self.cache_dir.mkdir(parents=True, exist_ok=True)
         self.author_cache = {}
         
-        # Graphe relationnel
         self.graph = {
             'nodes': [],
             'edges': []
         }
         
-        # Statistiques
         self.stats = {
             'total_quotes': 0,
             'total_authors': 0,
@@ -84,7 +80,6 @@ class QuotesGraphScraper:
     
     def _scrape_author_details(self, author_url: str, author_name: str) -> Dict:
         """Extraction détails auteur depuis page biographie"""
-        # Vérification cache
         cached_author = self._load_author_from_cache(author_name)
         if cached_author:
             print(f"  ↳ Cache HIT: {author_name}")
@@ -102,11 +97,9 @@ class QuotesGraphScraper:
             
             soup = BeautifulSoup(response.content, 'html.parser')
             
-            # Extraction biographie
             bio_tag = soup.select_one('.author-description')
             bio = bio_tag.get_text(strip=True) if bio_tag else 'N/A'
             
-            # Extraction dates et lieu
             born_date_tag = soup.select_one('.author-born-date')
             born_date = born_date_tag.get_text(strip=True) if born_date_tag else 'N/A'
             
@@ -122,7 +115,6 @@ class QuotesGraphScraper:
                 'url': full_url
             }
             
-            # Sauvegarde cache
             self._save_author_to_cache(author_name, author_data)
             
             self._respectful_delay()
@@ -156,23 +148,18 @@ class QuotesGraphScraper:
             page_quotes = []
             
             for block in quote_blocks:
-                # Texte citation
                 text_tag = block.select_one('.text')
                 text = text_tag.get_text(strip=True) if text_tag else 'N/A'
                 
-                # Auteur
                 author_tag = block.select_one('.author')
                 author_name = author_tag.get_text(strip=True) if author_tag else 'Unknown'
                 
-                # Lien vers biographie auteur
                 author_link_tag = block.select_one('a[href*="/author/"]')
                 author_url = author_link_tag['href'] if author_link_tag else None
                 
-                # Tags
                 tag_elements = block.select('.tag')
                 quote_tags = [tag.get_text(strip=True) for tag in tag_elements]
                 
-                # Scraping détails auteur si pas déjà fait
                 if author_name not in self.authors:
                     if author_url:
                         author_data = self._scrape_author_details(author_url, author_name)
@@ -180,7 +167,6 @@ class QuotesGraphScraper:
                     else:
                         self.authors[author_name] = self._get_default_author_data(author_name)
                 
-                # Ajout tags globaux
                 self.tags.update(quote_tags)
                 
                 quote_data = {
@@ -236,7 +222,6 @@ class QuotesGraphScraper:
         """Construction graphe relationnel Citation → Auteur → Tags"""
         print("\nConstruction graphe relationnel...")
         
-        # Nœuds auteurs
         for author_name, author_data in self.authors.items():
             self.graph['nodes'].append({
                 'id': f"author_{author_name}",
@@ -245,7 +230,6 @@ class QuotesGraphScraper:
                 'data': author_data
             })
         
-        # Nœuds tags
         for tag in self.tags:
             self.graph['nodes'].append({
                 'id': f"tag_{tag}",
@@ -253,7 +237,6 @@ class QuotesGraphScraper:
                 'label': tag
             })
         
-        # Nœuds citations et relations
         for idx, quote in enumerate(self.quotes):
             quote_id = f"quote_{idx}"
             
@@ -264,14 +247,12 @@ class QuotesGraphScraper:
                 'text': quote['text']
             })
             
-            # Relation citation → auteur
             self.graph['edges'].append({
                 'source': quote_id,
                 'target': f"author_{quote['author']}",
                 'type': 'authored_by'
             })
             
-            # Relations citation → tags
             for tag in quote['tags']:
                 self.graph['edges'].append({
                     'source': quote_id,
@@ -289,7 +270,6 @@ class QuotesGraphScraper:
             author = quote['author']
             author_counts[author] = author_counts.get(author, 0) + 1
         
-        # Tri par nombre de citations
         sorted_authors = sorted(
             author_counts.items(),
             key=lambda x: x[1],
@@ -304,26 +284,23 @@ class QuotesGraphScraper:
     
     def export_graphml(self):
         """Export graphe au format GraphML (importable Gephi/NetworkX)"""
-        output_dir = Path('./outputs')
+        output_dir = Path('./outputs/exercice_02')
         output_dir.mkdir(parents=True, exist_ok=True)
         
         graphml_file = output_dir / 'quotes_graph.graphml'
         
-        # Génération GraphML manuel (simple)
         graphml = ['<?xml version="1.0" encoding="UTF-8"?>']
         graphml.append('<graphml xmlns="http://graphml.graphdrawing.org/xmlns">')
         graphml.append('  <key id="type" for="node" attr.name="type" attr.type="string"/>')
         graphml.append('  <key id="label" for="node" attr.name="label" attr.type="string"/>')
         graphml.append('  <graph id="G" edgedefault="directed">')
         
-        # Nœuds
         for node in self.graph['nodes']:
             graphml.append(f'    <node id="{node["id"]}">')
             graphml.append(f'      <data key="type">{node["type"]}</data>')
             graphml.append(f'      <data key="label">{self._escape_xml(node["label"])}</data>')
             graphml.append('    </node>')
         
-        # Arêtes
         for idx, edge in enumerate(self.graph['edges']):
             graphml.append(f'    <edge id="e{idx}" source="{edge["source"]}" target="{edge["target"]}"/>')
         
@@ -346,7 +323,7 @@ class QuotesGraphScraper:
     
     def export_json(self):
         """Export JSON complet avec métadonnées"""
-        output_dir = Path('./outputs')
+        output_dir = Path('./outputs/exercice_02')
         output_dir.mkdir(parents=True, exist_ok=True)
         
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
@@ -376,19 +353,10 @@ def main():
     print("EXERCICE 2: Quotes to Scrape - Graphe de données")
     print("=" * 70)
     
-    # Limite par défaut: 2 pages (environ 20 citations)
     scraper = QuotesGraphScraper(max_pages=2)
-    
-    # Scraping avec pagination
     scraper.scrape_all_pages()
-    
-    # Construction graphe relationnel
     scraper.build_graph()
-    
-    # Détection auteurs populaires
     scraper.detect_most_cited_authors()
-    
-    # Exports
     scraper.export_graphml()
     scraper.export_json()
     
